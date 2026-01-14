@@ -64,5 +64,7 @@ $ docker run -p 3000:3000 my-nest-app
 $ docker run my-nest-app npm run test
 ```
 
-
+### Migrations
+Run migration: `npm run migration:run`
+Generate migration: `npm run migration:generate`
 
