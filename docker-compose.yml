@@ -1,7 +1,6 @@
 version: '3.8'
 
 services:
-  # Сервіс 1: Наш додаток (NestJS)
   app:
     build:
       context: .
@@ -9,22 +8,17 @@ services:
     container_name: nest-app
     ports:
       - "3000:3000"
-    # Ось тут магія Volumes (вимога завдання):
-    # Ми "прокидаємо" твою папку src всередину контейнера.
-    # Якщо ти зміниш код у VS Code -> він зміниться в контейнері -> сервер перезавантажиться.
     volumes:
       - .:/app
       - /app/node_modules
     depends_on:
-      - db # Чекаємо, поки запуститься база
+      - db
     environment:
       - DB_HOST=db
       - DB_PORT=5432
       - DB_USERNAME=postgres
       - DB_PASSWORD=postgres
       - DB_NAME=nestdb
-
-  # Сервіс 2: База Даних (PostgreSQL)
   db:
     image: postgres:15-alpine
     container_name: postgres-db
@@ -35,7 +29,7 @@ services:
       - POSTGRES_PASSWORD=postgres
       - POSTGRES_DB=nestdb
     volumes:
-      - postgres_data:/var/lib/postgresql/data # Щоб дані не зникали після перезапуску
+      - postgres_data:/var/lib/postgresql/data
 
 volumes:
   postgres_data:
